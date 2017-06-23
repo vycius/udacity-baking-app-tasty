@@ -6,8 +6,8 @@
     android:name="com.vycius.bakingapp.RecipeListFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
+    android:layout_marginLeft="@dimen/unit4"
+    android:layout_marginRight="@dimen/unit4"
     app:layoutManager="LinearLayoutManager"
     tools:context="com.vycius.tasty.RecipeDetailActivity"
     tools:listitem="@layout/recipe_list_content" />

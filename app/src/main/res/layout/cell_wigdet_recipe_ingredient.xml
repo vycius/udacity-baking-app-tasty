@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:padding="8dp">
+    android:padding="@dimen/unit2">
 
     <TextView
         android:id="@+id/recipe_ingredient_name"
