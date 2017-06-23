@@ -4,4 +4,5 @@
     <string name="servings">Servings</string>
     <string name="ingredient_quantity_text">%1$s %2$s</string>
     <string name="widget_no_recipe">No recipe selected</string>
+    <string name="add_to_widget">Add to widget</string>
 </resources>

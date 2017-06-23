@@ -5,6 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
+import android.view.Menu
+import android.view.MenuItem
 import com.vycius.tasty.adapter.RecipeListAdapter
 import com.vycius.tasty.adapter.delegate.RecipeStepsAdapter
 import com.vycius.tasty.manager.RecipeInfoWidgetManager
@@ -51,8 +53,6 @@ class RecipeDetailActivity : AppCompatActivity(), RecipeStepsAdapter.OnRecipeSte
 
         recipe = intent.extras.getParcelable(ARG_RECIPE) ?: throw IllegalArgumentException("Pass recipe")
 
-        recipeInfoWidgetManager.updateWidgetRecipe(recipe)
-
         setupRecyclerView(recycler_view)
 
         if (findViewById(R.id.recipe_detail_container) != null) {
@@ -65,6 +65,23 @@ class RecipeDetailActivity : AppCompatActivity(), RecipeStepsAdapter.OnRecipeSte
     }
 
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        super.onCreateOptionsMenu(menu)
+        menuInflater.inflate(R.menu.recipe_info, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+            R.id.action_add_to_widget -> {
+                recipeInfoWidgetManager.updateWidgetRecipe(recipe)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+
+        }
+    }
+
     override fun onStart() {
         super.onStart()
 
@@ -72,7 +89,6 @@ class RecipeDetailActivity : AppCompatActivity(), RecipeStepsAdapter.OnRecipeSte
 
         recipesAdapter.bind(recipe.steps, recipe.ingredients)
     }
-
 
     private fun setupRecyclerView(recyclerView: RecyclerView) {
         recipesAdapter = RecipeListAdapter(this)
