@@ -45,16 +45,21 @@
                 android:value="com.vycius.tasty.RecipeDetailActivity" />
         </activity>
 
+        <service
+            android:name=".service.RecipeInfoWidgetRemoteViewService"
+            android:enabled="true"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
 
-            <!--<receiver android:name=".widget.RecipeInfoWidget">-->
-                    <!--<intent-filter>-->
-                        <!--<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />-->
-                    <!--</intent-filter>-->
+        <receiver android:name=".widget.RecipeInfoWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
 
-                    <!--&lt;!&ndash;<meta-data&ndash;&gt;-->
-                        <!--&lt;!&ndash;android:name="android.appwidget.provider"&ndash;&gt;-->
-                        <!--&lt;!&ndash;android:resource="@xml/widget_recipe_info.xml" />&ndash;&gt;-->
-                <!--</receiver>-->
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_recipe_info" />
+        </receiver>
 
     </application>
 

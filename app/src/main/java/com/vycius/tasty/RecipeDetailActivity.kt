@@ -7,10 +7,12 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import com.vycius.tasty.adapter.RecipeListAdapter
 import com.vycius.tasty.adapter.delegate.RecipeStepsAdapter
+import com.vycius.tasty.manager.RecipeInfoWidgetManager
 import com.vycius.tasty.model.Recipe
 import com.vycius.tasty.model.Step
 import kotlinx.android.synthetic.main.recipe_detail_list.*
 import kotlinx.android.synthetic.main.toolbar.*
+import javax.inject.Inject
 
 
 /**
@@ -22,6 +24,9 @@ import kotlinx.android.synthetic.main.toolbar.*
  * item details side-by-side using two vertical panes.
  */
 class RecipeDetailActivity : AppCompatActivity(), RecipeStepsAdapter.OnRecipeStepClicked {
+
+    @Inject
+    lateinit var recipeInfoWidgetManager: RecipeInfoWidgetManager
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -37,12 +42,16 @@ class RecipeDetailActivity : AppCompatActivity(), RecipeStepsAdapter.OnRecipeSte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recipe_detail)
 
+        App.get(this).component.inject(this)
+
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         toolbar.title = title
 
         recipe = intent.extras.getParcelable(ARG_RECIPE) ?: throw IllegalArgumentException("Pass recipe")
+
+        recipeInfoWidgetManager.updateWidgetRecipe(recipe)
 
         setupRecyclerView(recycler_view)
 

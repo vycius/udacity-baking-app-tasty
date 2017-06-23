@@ -34,6 +34,7 @@ ext {
     daggerVersion = '2.11'
     paperParcelVersion = '2.0.1'
     exoplayerVersion = 'r2.4.2'
+    moshiVersion = '1.5.0'
 }
 
 dependencies {
@@ -63,6 +64,7 @@ dependencies {
     compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
     compile "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
 
+    compile "com.squareup.moshi:moshi:$moshiVersion"
 
     compile "com.google.dagger:dagger:$daggerVersion"
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"

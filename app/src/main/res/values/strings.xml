@@ -3,4 +3,5 @@
     <string name="recipes_retrieve_error">Unable to get recipes</string>
     <string name="servings">Servings</string>
     <string name="ingredient_quantity_text">%1$s %2$s</string>
+    <string name="widget_no_recipe">No recipe selected</string>
 </resources>

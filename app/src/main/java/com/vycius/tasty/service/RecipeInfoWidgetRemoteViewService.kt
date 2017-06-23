@@ -1,75 +1,68 @@
 package com.vycius.tasty.service
 
+import android.content.Intent
+import android.widget.RemoteViews
+import android.widget.RemoteViewsService
+import com.vycius.tasty.App
+import com.vycius.tasty.R
+import com.vycius.tasty.manager.RecipeInfoWidgetManager
+import com.vycius.tasty.model.Recipe
+import javax.inject.Inject
 
-//class RecipeInfoWidgetRemoteViewService : RemoteViewsService() {
-//    override fun onGetViewFactory(intent: Intent): RemoteViewsFactory {
-//        return object : RemoteViewsFactory {
-//
-//
-//            override fun onCreate() {}
-//
-//            override fun onDataSetChanged() {
-//                if (data != null) {
-//                    data!!.close()
-//                }
-//
-//                val identityToken = Binder.clearCallingIdentity()
-//
-//
-//                Binder.restoreCallingIdentity(identityToken)
-//            }
-//
-//            override fun onDestroy() {
-//                if (data != null) {
-//                    data!!.close()
-//                    data = null
-//                }
-//            }
-//
-//            override fun getCount(): Int {
-//                return if (data == null) 0 else data!!.getCount()
-//            }
-//
-//            override fun getViewAt(position: Int): RemoteViews? {
-//                if (position == AdapterView.INVALID_POSITION ||
-//                        data == null || !data!!.moveToPosition(position)) {
-//                    return null
-//                }
-//
-//                val views = RemoteViews(packageName, R.layout.list_item_quote)
-//                val symbol = data!!.getString(data!!.getColumnIndex("symbol"))
-//
-//                views.setTextViewText(R.id.stock_symbol, symbol)
-//                views.setTextViewText(R.id.bid_price, data!!.getString(data!!.getColumnIndex("bid_price")))
-//                views.setTextViewText(R.id.change, data!!.getString(data!!.getColumnIndex("percent_change")))
-//
-//
-//                if (data!!.getInt(data!!.getColumnIndex("is_up")) === 1) {
-//                    views.setInt(R.id.change, "setBackgroundResource", R.drawable.percent_change_pill_green)
-//                } else {
-//                    views.setInt(R.id.change, "setBackgroundResource", R.drawable.percent_change_pill_red)
-//                }
-//
-//                return views
-//            }
-//
-//            override fun getLoadingView(): RemoteViews? {
-//                return null
-//            }
-//
-//            override fun getViewTypeCount(): Int {
-//                return 1
-//            }
-//
-//            override fun getItemId(position: Int): Long {
-//                if (data!!.moveToPosition(position))
-//                    return data!!.getLong(data!!.getColumnIndexOrThrow(QuoteColumns._ID))
-//                return position.toLong()
-//            }
-//
-//            override fun hasStableIds(): Boolean {
-//                return true
-//            }
-//        }
-//    }
-//}
+
+class RecipeInfoWidgetRemoteViewService : RemoteViewsService() {
+
+    @Inject
+    lateinit var recipeInfoWidgetManager: RecipeInfoWidgetManager
+
+    override fun onGetViewFactory(intent: Intent): RemoteViewsFactory {
+        return object : RemoteViewsFactory {
+            private var recipe: Recipe? = null
+
+            override fun onCreate() {
+                App.get(applicationContext).component.inject(this@RecipeInfoWidgetRemoteViewService)
+
+            }
+
+            override fun onDataSetChanged() {
+                recipe = recipeInfoWidgetManager.getRecipe()
+            }
+
+            override fun onDestroy() {
+            }
+
+            override fun getCount(): Int {
+                return recipe?.ingredients?.size ?: 0
+            }
+
+            override fun getViewAt(position: Int): RemoteViews? {
+                val views = RemoteViews(packageName, R.layout.cell_wigdet_recipe_ingredient)
+
+                val ingredient = recipe?.ingredients?.get(position)
+
+                return ingredient?.let {
+                    views.apply {
+                        setTextViewText(R.id.recipe_ingredient_name, ingredient.ingredient)
+                        setTextViewText(R.id.recipe_ingredient_quantity, getString(R.string.ingredient_quantity_text, ingredient.quantity, ingredient.measure))
+                    }
+                }
+            }
+
+            override fun getLoadingView(): RemoteViews? {
+                return null
+            }
+
+            override fun getViewTypeCount(): Int {
+                return 1
+            }
+
+            override fun getItemId(position: Int): Long {
+                return position.toLong()
+            }
+
+            override fun hasStableIds(): Boolean {
+                return false
+            }
+        }
+    }
+}
