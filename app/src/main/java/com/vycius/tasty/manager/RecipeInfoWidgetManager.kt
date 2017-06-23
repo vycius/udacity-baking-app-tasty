@@ -9,6 +9,7 @@ import android.content.SharedPreferences
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.vycius.tasty.App
+import com.vycius.tasty.R
 import com.vycius.tasty.model.Recipe
 import com.vycius.tasty.widget.RecipeInfoWidget
 import javax.inject.Inject
@@ -48,11 +49,13 @@ class RecipeInfoWidgetManager(private val application: App) {
 
         intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
 
+        val appWidgetManager = AppWidgetManager.getInstance(application)
         val componentName = ComponentName(application, RecipeInfoWidget::class.java)
-        val appWidgetIds = AppWidgetManager.getInstance(application).getAppWidgetIds(componentName)
+        val appWidgetIds = appWidgetManager.getAppWidgetIds(componentName)
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds)
 
         application.sendBroadcast(intent)
+        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widget_list)
     }
 
     fun getRecipe(): Recipe? {
