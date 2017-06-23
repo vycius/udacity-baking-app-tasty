@@ -1,6 +1,5 @@
 package com.vycius.tasty.dagger
 
-import android.app.Application
 import com.squareup.moshi.Moshi
 import com.vycius.tasty.App
 import com.vycius.tasty.manager.RecipeInfoWidgetManager
@@ -15,10 +14,6 @@ import javax.inject.Singleton
 
 @Module
 class AppModule constructor(private val application: App) {
-
-    @Provides
-    @Singleton
-    internal fun providesApplication(): Application = application
 
     @Provides
     @Singleton
