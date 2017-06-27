@@ -11,7 +11,7 @@ import javax.inject.Singleton
 
 
 @Singleton
-@Component(modules = arrayOf(AppModule::class))
+@Component(modules = arrayOf(AppModule::class, ApiUrlModule::class))
 interface AppComponent {
     fun inject(mainActivityFragment: MainActivityFragment)
     fun inject(glideConfiguration: GlideConfiguration)

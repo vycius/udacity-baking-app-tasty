@@ -9,6 +9,7 @@ import dagger.Provides
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import javax.inject.Named
 import javax.inject.Singleton
 
 
@@ -31,9 +32,9 @@ class AppModule constructor(private val application: App) {
 
     @Provides
     @Singleton
-    fun provideRetrofit(okHttpClient: OkHttpClient, moshi: Moshi): Retrofit {
+    fun provideRetrofit(@Named("apiUrl") apiUrl: String, okHttpClient: OkHttpClient, moshi: Moshi): Retrofit {
         return Retrofit.Builder()
-                .baseUrl(API_BASE_URL)
+                .baseUrl(apiUrl)
                 .addConverterFactory(MoshiConverterFactory.create(moshi))
                 .client(okHttpClient)
                 .build()
@@ -49,10 +50,5 @@ class AppModule constructor(private val application: App) {
     @Singleton
     fun procidesRecipeInfoWidgetManager(): RecipeInfoWidgetManager {
         return RecipeInfoWidgetManager(application)
-    }
-
-
-    companion object {
-        val API_BASE_URL = "http://go.udacity.com/"
     }
 }
