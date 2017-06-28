@@ -9,7 +9,6 @@ class AppTestRunner : AndroidJUnitRunner() {
 
     @Throws(InstantiationException::class, IllegalAccessException::class, ClassNotFoundException::class)
     override fun newApplication(cl: ClassLoader, className: String, context: Context): Application {
-        val testApplicationClassName = TestApp::class.java.canonicalName
-        return super.newApplication(cl, testApplicationClassName, context)
+        return super.newApplication(cl, TestApp::class.java.canonicalName, context)
     }
 }

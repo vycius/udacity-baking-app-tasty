@@ -2,6 +2,8 @@ package com.vycius.tasty.dagger
 
 import com.vycius.tasty.MainActivityFragment
 import com.vycius.tasty.RecipeDetailActivity
+import com.vycius.tasty.dagger.module.ApiModule
+import com.vycius.tasty.dagger.module.AppModule
 import com.vycius.tasty.image.GlideConfiguration
 import com.vycius.tasty.manager.RecipeInfoWidgetManager
 import com.vycius.tasty.service.RecipeInfoWidgetRemoteViewService
@@ -11,7 +13,7 @@ import javax.inject.Singleton
 
 
 @Singleton
-@Component(modules = arrayOf(AppModule::class, ApiUrlModule::class))
+@Component(modules = arrayOf(AppModule::class, ApiModule::class))
 interface AppComponent {
     fun inject(mainActivityFragment: MainActivityFragment)
     fun inject(glideConfiguration: GlideConfiguration)

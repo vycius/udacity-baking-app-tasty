@@ -12,7 +12,6 @@ import android.support.test.espresso.matcher.ViewMatchers.withText
 import android.support.test.filters.LargeTest
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
-import com.vycius.tasty.dagger.TestApiUrlModule
 import com.vycius.tasty.extension.getStringFromFile
 import com.vycius.tasty.matcher.RecyclerViewMatcher
 import com.vycius.tasty.matcher.ToolbarViewMatcher
@@ -40,8 +39,7 @@ class MainActivityTest {
         server = MockWebServer()
         server!!.start()
 
-        // TODO This is hacky. Let's rethink this part
-        TestApiUrlModule.url = server!!.url("/").toString()
+        (getInstrumentation().targetContext.applicationContext as TestApp).injectWithApiUrl(server!!.url("/").toString())
     }
 
     @Test
