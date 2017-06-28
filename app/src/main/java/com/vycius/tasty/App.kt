@@ -7,7 +7,7 @@ import com.vycius.tasty.dagger.AppModule
 import com.vycius.tasty.dagger.DaggerAppComponent
 
 
-class App : Application() {
+open class App : Application() {
 
     lateinit var component: AppComponent
 
@@ -22,13 +22,11 @@ class App : Application() {
         component = buildComponent()
     }
 
-    private fun buildComponent(): AppComponent {
+    protected open fun buildComponent(): AppComponent {
         return DaggerAppComponent.builder()
                 .appModule(AppModule(this))
                 .build()
     }
-
-
 
     companion object {
         fun get(context: Context): App {
