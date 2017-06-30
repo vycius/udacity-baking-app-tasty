@@ -11,11 +11,7 @@ import com.vycius.tasty.model.Step
 import kotlinx.android.synthetic.main.cell_recipe_step.view.*
 
 class RecipeStepsAdapter(private val onRecipeStepClicked: OnRecipeStepClicked)
-    : DelegateAdapter<Step, RecipeStepsAdapter.RecipeStepsViewHolder>() {
-
-    override fun isForViewType(item: Any): Boolean {
-        return item is Step
-    }
+    : DelegateAdapter<Step, RecipeStepsAdapter.RecipeStepsViewHolder>(Step::class.java) {
 
     override fun onBindViewHolder(holder: RecipeStepsViewHolder, item: Step) {
         holder.bind(item)

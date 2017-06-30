@@ -4,9 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 
 
-abstract class DelegateAdapter<I, H : RecyclerView.ViewHolder> {
-
-    abstract fun isForViewType(item: Any): Boolean
+abstract class DelegateAdapter<I, H : RecyclerView.ViewHolder>(private val clazz: Class<I>) {
 
     abstract fun onCreateViewHolder(parent: ViewGroup): H
 
@@ -16,4 +14,7 @@ abstract class DelegateAdapter<I, H : RecyclerView.ViewHolder> {
         @Suppress("UNCHECKED_CAST")
         onBindViewHolder(holder as H, item as I)
     }
+
+    open fun isForViewType(item: Any): Boolean = clazz.isInstance(item)
+
 }

@@ -7,11 +7,7 @@ import com.vycius.tasty.extensions.inflate
 import com.vycius.tasty.model.Ingredient
 import kotlinx.android.synthetic.main.cell_recipe_ingredient.view.*
 
-class RecipeIngredientDelegateAdapter : DelegateAdapter<Ingredient, RecipeIngredientDelegateAdapter.RecipeIngredientViewHolder>() {
-
-    override fun isForViewType(item: Any): Boolean {
-        return item is Ingredient
-    }
+class RecipeIngredientDelegateAdapter : DelegateAdapter<Ingredient, RecipeIngredientDelegateAdapter.RecipeIngredientViewHolder>(Ingredient::class.java) {
 
     override fun onCreateViewHolder(parent: ViewGroup): RecipeIngredientViewHolder {
         return RecipeIngredientViewHolder(parent)
@@ -22,7 +18,7 @@ class RecipeIngredientDelegateAdapter : DelegateAdapter<Ingredient, RecipeIngred
     }
 
     inner class RecipeIngredientViewHolder(parent: ViewGroup)
-        : RecyclerView.ViewHolder(parent.inflate(R.layout.cell_recipe_ingredient))  {
+        : RecyclerView.ViewHolder(parent.inflate(R.layout.cell_recipe_ingredient)) {
 
         fun bind(item: Ingredient) = itemView.run {
             recipe_ingredient_name.text = item.ingredient

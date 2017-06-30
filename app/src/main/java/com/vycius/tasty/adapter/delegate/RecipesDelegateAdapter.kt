@@ -10,11 +10,7 @@ import com.vycius.tasty.model.Recipe
 import kotlinx.android.synthetic.main.cell_recipe.view.*
 
 class RecipesDelegateAdapter(val onRecipeClicked: (recipe: Recipe) -> Unit)
-    : DelegateAdapter<Recipe, RecipesDelegateAdapter.RecipeViewHolder>() {
-
-    override fun isForViewType(item: Any): Boolean {
-        return item is Recipe
-    }
+    : DelegateAdapter<Recipe, RecipesDelegateAdapter.RecipeViewHolder>(Recipe::class.java) {
 
     override fun onBindViewHolder(holder: RecipeViewHolder, item: Recipe) {
         holder.bind(item)
